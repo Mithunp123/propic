@@ -1,0 +1,127 @@
+.admin-shell {
+  min-height: 100vh;
+  overflow-x: hidden;
+}
+
+.page-wrap.admin-page-wrap {
+  width: 100%;
+  max-width: none;
+  margin: 0;
+  padding: 22px 22px 48px;
+}
+
+.admin-layout {
+  display: grid;
+  grid-template-columns: 280px minmax(0, 1fr);
+  gap: 18px;
+  align-items: start;
+  width: 100%;
+}
+
+.admin-content {
+  display: grid;
+  gap: 18px;
+}
+
+.admin-page-header {
+  display: grid;
+  gap: 6px;
+  padding: 2px 2px 0;
+}
+
+.admin-page-kicker {
+  color: #0f766e;
+  font-size: 0.78rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  font-weight: 800;
+}
+
+.admin-page-header h1 {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.7rem, 3vw, 2.2rem);
+  color: #17324d;
+}
+
+.admin-page-panel {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-section-title {
+  margin: 0;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: clamp(1.4rem, 2.2vw, 1.8rem);
+  color: #17324d;
+}
+
+.admin-section-subtitle {
+  margin: 6px 0 0;
+  color: #4b5563;
+}
+
+.private-gate {
+  max-width: 600px;
+  margin: 0 auto;
+}
+
+.modal-backdrop {
+  position: fixed;
+  inset: 0;
+  background: rgba(2, 6, 23, 0.72);
+  display: grid;
+  place-items: center;
+  padding: 24px;
+  z-index: 40;
+}
+
+.modal-card {
+  width: min(820px, 100%);
+  max-height: min(90vh, 900px);
+  overflow: auto;
+  border-radius: 28px;
+  padding: 24px;
+  background: #ffffff;
+  border: 1px solid rgba(15, 23, 42, 0.1);
+  box-shadow: 0 24px 80px rgba(0, 0, 0, 0.5);
+}
+
+.product-modal {
+  width: min(880px, 100%);
+}
+
+@media (max-width: 768px) {
+  .admin-page-wrap {
+    width: calc(100% - 12px);
+    padding: 14px 0 28px;
+  }
+
+  .admin-layout {
+    grid-template-columns: 1fr;
+    gap: 12px;
+  }
+
+  .admin-content {
+    gap: 12px;
+  }
+
+  .admin-page-header {
+    padding: 0;
+  }
+
+  .admin-sidebar {
+    position: static;
+    top: auto;
+    padding: 14px;
+    border-radius: 18px;
+  }
+
+  .admin-sidebar-brand h2 {
+    font-size: 1.15rem;
+  }
+
+  .admin-sidebar .button.full {
+    justify-content: center;
+  }
+}

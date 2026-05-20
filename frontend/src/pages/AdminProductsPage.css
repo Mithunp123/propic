@@ -1,0 +1,39 @@
+.admin-products-page {
+  display: grid;
+  gap: 16px;
+}
+
+.admin-product-filters {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(220px, 320px));
+  gap: 12px;
+}
+
+.admin-product-filter-field {
+  display: grid;
+  gap: 6px;
+}
+
+.admin-product-filter-field span {
+  font-size: 0.8rem;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  color: #0f766e;
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .admin-product-filters {
+    grid-template-columns: 1fr;
+  }
+}
+
+@media (max-width: 480px) {
+  .admin-product-filters {
+    gap: 10px;
+  }
+
+  .admin-products-page .row-between {
+    gap: 10px;
+  }
+}
