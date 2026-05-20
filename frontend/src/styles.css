@@ -4229,25 +4229,24 @@ body, .app-shell {
   justify-content: center;
   margin-top: 32px;
   padding: 14px 28px;
-  background: #ffffff;
-  color: #414042;
+  background: linear-gradient(135deg, #d300c5, #00b3b0);
+  color: #000000;
   font-family: 'Space Grotesk', sans-serif;
   font-weight: 700;
   font-size: 1rem;
   text-decoration: none;
   border-radius: 999px;
-  border: 1.5px solid transparent;
-  background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(135deg, #d300c5, #00b3b0);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
+  border: none;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   text-transform: lowercase;
-  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.04);
+  box-shadow: 0 4px 12px rgba(211, 0, 197, 0.2);
 }
 
 .view-all-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 20px rgba(0, 0, 0, 0.08);
+  box-shadow: 0 8px 20px rgba(211, 0, 197, 0.35);
+  color: #000000;
+  filter: brightness(1.08);
 }
 
 .explore-slider {
@@ -4562,5 +4561,241 @@ body, .app-shell {
   }
 }
 
+/* ==========================================================================
+   Rave Slider Section (Testimonials)
+   ========================================================================== */
 
+.rave-slider-section {
+  position: relative;
+  width: 100vw !important;
+  left: 50%;
+  right: 50%;
+  margin-left: -50vw !important;
+  margin-right: -50vw !important;
+  padding: 80px 0 72px;
+  box-sizing: border-box;
+  background-image: linear-gradient(269.15deg, #7800bf 0.73%, #d80e80 95.66%);
+  color: #ffffff;
+  overflow: hidden;
+}
 
+.rave-slider-container {
+  width: 100%;
+  max-width: 100%;
+  margin: 0 auto;
+  padding: 0 40px;
+  box-sizing: border-box;
+}
+
+.rave-tagline {
+  font-family: 'Inter', sans-serif;
+  font-size: 1.25rem;
+  font-weight: 400;
+  text-align: center;
+  margin: 0 0 8px 0;
+  color: rgba(255, 255, 255, 0.9);
+  text-transform: lowercase;
+  letter-spacing: 0.01em;
+}
+
+.rave-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 3.25rem;
+  font-weight: 700;
+  text-align: center;
+  margin: 0 0 40px 0;
+  color: #ffffff;
+  letter-spacing: -0.03em;
+  line-height: 1.1;
+  text-transform: lowercase;
+}
+
+.rave-grid-wrap {
+  width: 100%;
+  overflow: visible;
+}
+
+/* 4-column flex row — no scroll, all fit on screen */
+.rave-grid-container {
+  display: flex;
+  flex-direction: row;
+  gap: 24px;
+  align-items: stretch;
+  overflow: visible;
+}
+
+.rave-card {
+  flex: 1 1 0;
+  min-width: 0;
+  background: #ffffff;
+  color: #7800bf;
+  border-radius: 28px;
+  overflow: hidden;
+  display: flex;
+  flex-direction: column;
+  box-shadow: 0 12px 32px rgba(0, 0, 0, 0.18);
+  transition: transform 0.4s cubic-bezier(0.165, 0.84, 0.44, 1), box-shadow 0.4s ease;
+}
+
+.rave-card:hover {
+  transform: translateY(-8px);
+  box-shadow: 0 24px 52px rgba(0, 0, 0, 0.28);
+}
+
+/* Image area — taller to match ~300px out of ~550px total */
+.rave-img-box {
+  width: 100%;
+  height: 300px;
+  overflow: hidden;
+  background: #f4f4f5;
+  position: relative;
+  flex-shrink: 0;
+}
+
+.rave-card-img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+  transition: transform 0.6s cubic-bezier(0.165, 0.84, 0.44, 1);
+}
+
+.rave-card:hover .rave-card-img {
+  transform: scale(1.05);
+}
+
+/* Card body — 40px horizontal padding */
+.rave-card-body {
+  padding: 24px 40px 32px;
+  display: flex;
+  flex-direction: column;
+  gap: 14px;
+  flex: 1;
+}
+
+.rave-stars {
+  display: flex;
+  gap: 3px;
+}
+
+.rave-stars svg {
+  fill: #7800bf;
+  filter: drop-shadow(0 2px 4px rgba(120, 0, 191, 0.15));
+}
+
+.rave-card-title {
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  margin: 0;
+  text-transform: lowercase;
+  line-height: 1.2;
+  color: #7800bf;
+}
+
+.rave-card-quote {
+  font-family: 'Inter', sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  color: #4a4a4a;
+  margin: 0;
+  flex: 1;
+}
+
+.rave-card-btn {
+  display: inline-flex;
+  align-items: center;
+  justify-content: center;
+  width: 100%;
+  height: 48px;
+  border-radius: 999px;
+  font-family: 'Space Grotesk', sans-serif;
+  font-weight: 600;
+  font-size: 1rem;
+  text-decoration: none;
+  color: #000000;
+  background: #ffffff;
+  border: 1.5px solid transparent;
+  background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(135deg, #d300c5, #00b3b0);
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  cursor: pointer;
+  transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
+  box-shadow: 0 2px 8px rgba(211, 0, 197, 0.08);
+  margin-top: auto;
+}
+
+.rave-card-btn:hover {
+  transform: translateY(-2px);
+  box-shadow: 0 8px 24px rgba(211, 0, 197, 0.2), 0 8px 24px rgba(0, 179, 176, 0.15);
+  color: #000000;
+}
+
+/* Responsive */
+@media (max-width: 1024px) {
+  .rave-slider-container {
+    padding: 0 24px;
+  }
+
+  .rave-grid-container {
+    gap: 16px;
+  }
+
+  .rave-card-body {
+    padding: 20px 24px 28px;
+  }
+
+  .rave-img-box {
+    height: 240px;
+  }
+
+  .rave-title {
+    font-size: 2.75rem;
+  }
+}
+
+@media (max-width: 768px) {
+  .rave-slider-section {
+    padding: 64px 0;
+  }
+
+  .rave-slider-container {
+    padding: 0 16px;
+  }
+
+  .rave-tagline {
+    font-size: 1.1rem;
+  }
+
+  .rave-title {
+    font-size: 2.25rem;
+    margin-bottom: 28px;
+  }
+
+  .rave-grid-container {
+    flex-wrap: wrap;
+    gap: 20px;
+  }
+
+  .rave-card {
+    flex: 1 1 calc(50% - 10px);
+  }
+
+  .rave-img-box {
+    height: 220px;
+  }
+
+  .rave-card-body {
+    padding: 20px 24px 24px;
+  }
+}
+
+@media (max-width: 480px) {
+  .rave-card {
+    flex: 1 1 100%;
+  }
+
+  .rave-img-box {
+    height: 200px;
+  }
+}

@@ -1,10 +1,12 @@
-import { useRef, useEffect } from 'react'
+import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
 function HomePage({ addToCart }) {
   const scrollContainerRef = useRef(null)
   const collectionsGridRef = useRef(null)
   const thumbRef = useRef(null)
+  const testimonialScrollRef = useRef(null)
+  const [activeTestimonial, setActiveTestimonial] = useState(0)
 
   useEffect(() => {
     const slider = collectionsGridRef.current
@@ -106,6 +108,45 @@ function HomePage({ addToCart }) {
       document.removeEventListener('mouseup', onThumbMouseUp)
     }
   }, [])
+
+  useEffect(() => {
+    const slider = testimonialScrollRef.current
+    if (!slider) return
+
+    const handleScroll = () => {
+      const scrollLeft = slider.scrollLeft
+      const clientWidth = slider.clientWidth
+      const scrollWidth = slider.scrollWidth
+      
+      const maxScroll = scrollWidth - clientWidth
+      if (maxScroll > 0) {
+        const percent = scrollLeft / maxScroll
+        const slideIndex = Math.round(percent * 3)
+        setActiveTestimonial(Math.max(0, Math.min(3, slideIndex)))
+      }
+    }
+
+    slider.addEventListener('scroll', handleScroll)
+    return () => slider.removeEventListener('scroll', handleScroll)
+  }, [])
+
+  const scrollToTestimonial = (index) => {
+    const slider = testimonialScrollRef.current
+    if (!slider) return
+    
+    const card = slider.querySelector('.rave-card')
+    if (!card) return
+    
+    const cardWidth = card.clientWidth
+    const gap = 16
+    const targetScrollLeft = index * (cardWidth + gap)
+    
+    slider.scrollTo({
+      left: targetScrollLeft,
+      behavior: 'smooth'
+    })
+    setActiveTestimonial(index)
+  }
 
   const scroll = (direction) => {
     if (scrollContainerRef.current) {
@@ -678,6 +719,127 @@ function HomePage({ addToCart }) {
               <div className="explore-slider-thumb" ref={thumbRef}></div>
             </div>
           </div>
+        </div>
+      </section>
+
+      {/* Testimonials Slider Section */}
+      <section className="rave-slider-section">
+        <div className="rave-slider-container">
+          <div className="rave-tagline">
+            <p>it seems our suds are something of a scent-sation</p>
+          </div>
+          <h2 className="rave-title">our fave raves</h2>
+
+          <div className="rave-grid-wrap">
+            <div className="rave-grid-container" ref={testimonialScrollRef}>
+              
+              {/* Card 1 */}
+              <div className="rave-card">
+                <div className="rave-img-box">
+                  <img
+                    src="https://methodproducts.com/cdn/shop/files/image_ratios_6.jpg?crop=center&height=249&v=1742825550&width=350"
+                    alt="so moisturized"
+                    className="rave-card-img"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="rave-card-body">
+                  <div className="rave-stars">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} width="20" height="20" viewBox="0 0 24 24" fill="#7800bf">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <h3 className="rave-card-title">so moisturized</h3>
+                  <p className="rave-card-quote">
+                    “I love this shampoo!... My hair has never felt so healthy and nourished!” -teef8
+                  </p>
+                  <Link to="/products" className="rave-card-btn">shop now</Link>
+                </div>
+              </div>
+
+              {/* Card 2 */}
+              <div className="rave-card">
+                <div className="rave-img-box">
+                  <img
+                    src="https://methodproducts.com/cdn/shop/files/addictive.jpg?crop=center&height=488&v=1742395410&width=700"
+                    alt="addictive"
+                    className="rave-card-img"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="rave-card-body">
+                  <div className="rave-stars">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} width="20" height="20" viewBox="0 0 24 24" fill="#7800bf">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <h3 className="rave-card-title">addictive</h3>
+                  <p className="rave-card-quote">
+                    “leaves amazing results on the floor and the scent is addictive.” -Magical Maids
+                  </p>
+                  <Link to="/products" className="rave-card-btn">shop now</Link>
+                </div>
+              </div>
+
+              {/* Card 3 */}
+              <div className="rave-card">
+                <div className="rave-img-box">
+                  <img
+                    src="https://methodproducts.com/cdn/shop/files/my-goto.jpg?crop=center&height=488&v=1742395410&width=700"
+                    alt="my go-to"
+                    className="rave-card-img"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="rave-card-body">
+                  <div className="rave-stars">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} width="20" height="20" viewBox="0 0 24 24" fill="#7800bf">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <h3 className="rave-card-title">my go-to</h3>
+                  <p className="rave-card-quote">
+                    “this is my go to. It works well, I use it on everything and it smells so good! -lilheathz
+                  </p>
+                  <Link to="/products" className="rave-card-btn">shop now</Link>
+                </div>
+              </div>
+
+              {/* Card 4 */}
+              <div className="rave-card">
+                <div className="rave-img-box">
+                  <img
+                    src="https://methodproducts.com/cdn/shop/files/amazing.jpg?crop=center&height=488&v=1742395410&width=700"
+                    alt="amazing"
+                    className="rave-card-img"
+                    loading="lazy"
+                  />
+                </div>
+                <div className="rave-card-body">
+                  <div className="rave-stars">
+                    {[...Array(5)].map((_, i) => (
+                      <svg key={i} width="20" height="20" viewBox="0 0 24 24" fill="#7800bf">
+                        <path d="M12 17.27L18.18 21l-1.64-7.03L22 9.24l-7.19-.61L12 2 9.19 8.63 2 9.24l5.46 4.73L5.82 21z" />
+                      </svg>
+                    ))}
+                  </div>
+                  <h3 className="rave-card-title">amazing</h3>
+                  <p className="rave-card-quote">
+                    “Lathers well, smells amazing, scent actually lasts on the skin, moisturizes well” -Mickey
+                  </p>
+                  <Link to="/products" className="rave-card-btn">shop now</Link>
+                </div>
+              </div>
+
+            </div>
+          </div>
+
         </div>
       </section>
 
