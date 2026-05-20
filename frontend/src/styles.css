@@ -64,10 +64,13 @@ button, input, select, textarea { font: inherit; }
 .topnav a { padding: 10px 14px; border-radius: 999px; background: rgba(255, 255, 255, 0.9); border: 1px solid rgba(15, 23, 42, 0.08); }
 .topnav a.active { background: linear-gradient(135deg, rgba(0, 151, 178, 0.15), rgba(255, 233, 147, 0.15)); }
 .cart-pill {
-  border: 1px solid rgba(15, 23, 42, 0.12);
+  /* show only the icon for mobile cart: remove pill background/border */
   display: inline-flex;
   align-items: center;
   gap: 8px;
+  background: transparent;
+  border: none;
+  padding: 0;
 }
 
 .cart-count-badge {
@@ -82,6 +85,15 @@ button, input, select, textarea { font: inherit; }
   font-size: 0.78rem;
   font-weight: 700;
   padding: 0 6px;
+}
+
+/* Shopping cart icon color (cyan) */
+.header-cart-svg {
+  color: #00FFFF; /* cyan */
+}
+
+.cart-pill .nav-icon {
+  color: #00FFFF; /* cyan for mobile nav cart icon */
 }
 
 .mobile-nav {
@@ -1705,17 +1717,18 @@ body, .app-shell {
 
 /* Premium Interactive Lottie-style Cart Action Button */
 .header-cart-action {
+  /* remove circular card/button so only the icon shows */
   display: inline-flex;
   align-items: center;
   justify-content: center;
-  background: rgba(255, 255, 255, 0.08);
-  border: 1.5px solid rgba(255, 255, 255, 0.18);
-  width: 46px;
-  height: 46px;
-  border-radius: 50%;
-  color: #ffffff;
+  background: transparent;
+  border: none;
+  width: auto;
+  height: auto;
+  padding: 0;
+  color: inherit;
   position: relative;
-  transition: all 0.3s cubic-bezier(0.4, 0, 0.2, 1);
+  transition: transform 0.18s ease;
   cursor: pointer;
   z-index: 10;
 }
@@ -1726,19 +1739,12 @@ body, .app-shell {
   color: #073b46;
 }
 
-.header-cart-action:hover {
-  background: rgba(255, 255, 255, 0.2);
-  border-color: #F9C013;
-  color: #F9C013;
+.header-cart-action:hover .header-cart-svg {
   transform: scale(1.08);
-  box-shadow: 0 4px 15px rgba(249, 192, 19, 0.2);
 }
 
-.neatly-header.is-solid .header-cart-action:hover {
-  background: rgba(7, 59, 70, 0.1);
-  border-color: #0097b2;
-  color: #0097b2;
-  box-shadow: 0 4px 15px rgba(0, 151, 178, 0.15);
+.neatly-header.is-solid .header-cart-action:hover .header-cart-svg {
+  transform: scale(1.06);
 }
 
 .cart-icon-wrapper {
@@ -1921,7 +1927,7 @@ body, .app-shell {
 }
 
 .main-hero {
-  background-image: url('/brand/hero-cleaner.png');
+  background-image: url('/hero-background.png');
   background-size: cover;
   background-position: center 20%;
   background-repeat: no-repeat;
