@@ -77,17 +77,29 @@ def init_db():
             """
         )
 
-        cursor.execute(
-            """
-            SELECT COUNT(*) AS column_count
-            FROM information_schema.columns
-            WHERE table_schema = DATABASE()
-              AND table_name = 'products'
-              AND column_name = 'image_urls'
-            """
-        )
-        if cursor.fetchone()["column_count"] == 0:
-            cursor.execute("ALTER TABLE products ADD COLUMN image_urls TEXT AFTER image_url")
+        # Helper to safely add column if it doesn't exist
+        columns_to_add = [
+            ("image_urls", "TEXT AFTER image_url"),
+            ("rating", "DECIMAL(3, 2) DEFAULT 5.00 AFTER featured"),
+            ("review_count", "INT DEFAULT 0 AFTER rating"),
+            ("original_price", "DECIMAL(10, 2) NULL AFTER review_count"),
+            ("fragrance", "VARCHAR(100) NULL AFTER original_price"),
+            ("badge", "VARCHAR(50) NULL AFTER fragrance"),
+            ("color_code", "VARCHAR(50) NULL AFTER badge")
+        ]
+
+        for col_name, col_def in columns_to_add:
+            cursor.execute(
+                f"""
+                SELECT COUNT(*) AS column_count
+                FROM information_schema.columns
+                WHERE table_schema = DATABASE()
+                  AND table_name = 'products'
+                  AND column_name = '{col_name}'
+                """
+            )
+            if cursor.fetchone()["column_count"] == 0:
+                cursor.execute(f"ALTER TABLE products ADD COLUMN {col_name} {col_def}")
 
         cursor.execute(
             """
@@ -141,6 +153,11 @@ def serialize_product(product):
     product = dict(product)
     if product.get("price") is not None:
         product["price"] = float(product["price"])
+    if product.get("rating") is not None:
+        product["rating"] = float(product["rating"])
+    if product.get("original_price") is not None:
+        product["original_price"] = float(product["original_price"])
+
     raw_image_urls = product.get("image_urls")
     image_urls = []
     if isinstance(raw_image_urls, list):
@@ -177,7 +194,7 @@ def serialize_order(order):
 
 def get_featured_products(limit=8):
     query = """
-        SELECT id, name, description, price, image_url, image_urls, category, stock, featured, created_at
+        SELECT *
         FROM products
         WHERE featured = TRUE AND stock > 0
         ORDER BY created_at DESC
@@ -186,7 +203,7 @@ def get_featured_products(limit=8):
     products = _product_rows(query, (limit,))
     if not products:
         query = """
-            SELECT id, name, description, price, image_url, image_urls, category, stock, featured, created_at
+            SELECT *
             FROM products
             WHERE stock > 0
             ORDER BY created_at DESC
@@ -198,7 +215,7 @@ def get_featured_products(limit=8):
 
 def get_all_products(include_out_of_stock=False):
     query = """
-        SELECT id, name, description, price, image_url, image_urls, category, stock, featured, created_at
+        SELECT *
         FROM products
     """
     if not include_out_of_stock:

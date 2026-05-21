@@ -16,12 +16,14 @@ import AdminLayout from './components/layout/AdminLayout'
 import AdminDashboardPage from './pages/AdminDashboardPage'
 import AdminProductsPage from './pages/AdminProductsPage'
 import AdminOrdersPage from './pages/AdminOrdersPage'
+import CartDrawer from './components/layout/CartDrawer'
 import { readCart, writeCart } from './utils/cart'
 
 function App() {
   const [cart, setCart] = useState(readCart())
   const cartCount = useMemo(() => cart.reduce((total, item) => total + item.quantity, 0), [cart])
   const [notice, setNotice] = useState('')
+  const [isCartOpen, setIsCartOpen] = useState(false)
   const location = useLocation()
   const isAdminRoute = location.pathname === ADMIN_ROUTE || location.pathname.startsWith(`${ADMIN_ROUTE}/`)
 
@@ -44,11 +46,20 @@ function App() {
       if (existing) {
         existing.quantity += 1
       } else {
-        next.push({ id: product.id, name: product.name, price: Number(product.price), quantity: 1 })
+        next.push({
+          id: product.id,
+          name: product.name,
+          price: Number(product.price),
+          quantity: 1,
+          image_url: product.image_url,
+          fragrance: product.fragrance || '',
+          category: product.category || ''
+        })
       }
       return next
     })
     setNotice(`Successfully added ${product.name} to cart`)
+    setIsCartOpen(true) // Auto open cart drawer when product is added
     window.setTimeout(() => setNotice(''), 2200)
   }
 
@@ -66,13 +77,19 @@ function App() {
 
   return (
     <div className={isAdminRoute ? 'app-shell admin-shell' : 'app-shell'}>
-      {!isAdminRoute ? <Header cartCount={cartCount} isHome={isHome} /> : null}
+      {!isAdminRoute ? (
+        <Header
+          cartCount={cartCount}
+          isHome={isHome}
+          onCartClick={() => setIsCartOpen(true)}
+        />
+      ) : null}
       {!isAdminRoute && notice ? <div className="toast-banner">{notice}</div> : null}
       {!isAdminRoute ? <MobileNav cartCount={cartCount} /> : null}
 
       <main className={`${isAdminRoute ? 'page-wrap admin-page-wrap' : 'page-wrap'} ${isHome ? 'is-home-wrap' : ''}`}>
         <Routes>
-          <Route path="/" element={<HomePage addToCart={addToCart} />} />
+          <Route path="/" element={<HomePage />} />
           <Route path="/products" element={<ProductsPage addToCart={addToCart} />} />
           <Route path="/cart" element={<CartPage cart={cart} updateQuantity={updateQuantity} removeItem={removeItem} clearCart={clearCart} />} />
           <Route path="/checkout" element={<CheckoutPage cart={cart} clearCart={clearCart} />} />
@@ -90,6 +107,17 @@ function App() {
       </main>
 
       {!isAdminRoute ? <Footer /> : null}
+
+      {!isAdminRoute ? (
+        <CartDrawer
+          isOpen={isCartOpen}
+          onClose={() => setIsCartOpen(false)}
+          cart={cart}
+          updateQuantity={updateQuantity}
+          removeItem={removeItem}
+          addToCart={addToCart}
+        />
+      ) : null}
     </div>
   )
 }

@@ -1,8 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function HomePage({ addToCart }) {
-  const scrollContainerRef = useRef(null)
+function HomePage() {
   const collectionsGridRef = useRef(null)
   const thumbRef = useRef(null)
   const testimonialScrollRef = useRef(null)
@@ -148,12 +147,6 @@ function HomePage({ addToCart }) {
     setActiveTestimonial(index)
   }
 
-  const scroll = (direction) => {
-    if (scrollContainerRef.current) {
-      const scrollAmount = direction === 'left' ? -340 : 340
-      scrollContainerRef.current.scrollBy({ left: scrollAmount, behavior: 'smooth' })
-    }
-  }
   return (
     <section className="home-shell">
       {/* Main Hero Section */}
@@ -307,14 +300,12 @@ function HomePage({ addToCart }) {
                   <p className="collection-card-desc">
                     meet our body wash tonics. an innovative collection for your specific skincare needs. mix and match to create the perfect regimen for your unique skin.
                   </p>
-                  <a 
-                    href="https://methodproducts.com/collections/body-wash-tonics" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <Link 
+                    to="/products" 
                     className="collection-card-btn"
                   >
                     shop body tonics
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -336,14 +327,12 @@ function HomePage({ addToCart }) {
                   <p className="collection-card-desc">
                     with a dermatologist-tested formula and skincare inspired ingredients, this hydrating serum maintains skin’s microbiome and smells delightful.
                   </p>
-                  <a 
-                    href="https://methodproducts.com/collections/hydrating-serum-hand-wash" 
-                    target="_blank" 
-                    rel="noopener noreferrer" 
+                  <Link 
+                    to="/products" 
                     className="collection-card-btn"
                   >
                     shop hand serum
-                  </a>
+                  </Link>
                 </div>
               </div>
             </div>
@@ -380,14 +369,12 @@ function HomePage({ addToCart }) {
                 <p className="bundle-card-desc">
                   for glowy, dewy skin
                 </p>
-                <a 
-                  href="https://methodproducts.com/products/barrier-supporting-and-microbuffing-body-wash-tonic-bundle-34-fl-oz" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <Link 
+                  to="/products" 
                   className="bundle-card-btn"
                 >
                   shop the bundle
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -407,14 +394,12 @@ function HomePage({ addToCart }) {
                 <p className="bundle-card-desc">
                   for clear, hydrated skin
                 </p>
-                <a 
-                  href="https://methodproducts.com/products/dewy-glow-bundle-34-fl-oz" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <Link 
+                  to="/products" 
                   className="bundle-card-btn"
                 >
                   shop the bundle
-                </a>
+                </Link>
               </div>
             </div>
 
@@ -434,170 +419,14 @@ function HomePage({ addToCart }) {
                 <p className="bundle-card-desc">
                   for smooth, hydrated skin
                 </p>
-                <a 
-                  href="https://methodproducts.com/products/dewy-glow-bundle-34-fl-oz" 
-                  target="_blank" 
-                  rel="noopener noreferrer" 
+                <Link 
+                  to="/products" 
                   className="bundle-card-btn"
                 >
                   shop the bundle
-                </a>
+                </Link>
               </div>
             </div>
-          </div>
-        </div>
-      </section>
-
-      {/* Bestsellers Section: "go ahead, grab our fan favorites" */}
-      <section className="bestsellers-section">
-        {/* Backdrop Wave Vector image */}
-        <picture className="bestsellers-backdrop">
-          <img 
-            src="https://methodproducts.com/cdn/shop/files/refill-carousel-vector.webp?crop=center&height=855&v=1742308145&width=1680" 
-            alt="wavy vector background" 
-            className="bestsellers-backdrop-img" 
-          />
-        </picture>
-
-        <div className="bestsellers-container">
-          <div className="bestsellers-header">
-            <div className="bestsellers-title-box">
-              <span className="bestsellers-subtitle">shop bestsellers</span>
-              <h2 className="bestsellers-title">go ahead, grab our fan favorites</h2>
-            </div>
-          </div>
-
-
-
-          {/* Cards Grid wrapper with scroll snapping */}
-          <div className="bestsellers-grid-wrap" ref={scrollContainerRef}>
-            <div className="bestsellers-grid">
-              
-              {/* Card 1: Gel Hand Wash Refill */}
-              <div className="bestseller-card">
-                <div className="bestseller-img-box">
-                  <img 
-                    src="https://methodproducts.com/cdn/shop/files/MTHD_GHW_Refill_34oz_SweetWater_Front_US_378682__13360.1737652984.386.513_122dd232-c8d7-43e9-907c-c6d1ea521685.jpg?v=1770160914" 
-                    alt="gel hand wash refill - sweet water" 
-                    className="bestseller-img"
-                  />
-                </div>
-                <div className="bestseller-content">
-                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(54)</span></div>
-                  <div className="bestseller-tag-text">best seller</div>
-                  <div className="bestseller-scent">sweet water</div>
-                  <h3 className="bestseller-product-title">gel hand wash refill</h3>
-                  <div className="bestseller-footer">
-                    <span className="bestseller-price">$7.49</span>
-                    <button 
-                      type="button"
-                      className="bestseller-card-btn"
-                      onClick={() => addToCart({
-                        id: 'bestseller-1',
-                        name: 'gel hand wash refill - sweet water',
-                        price: 7.49
-                      })}
-                    >
-                      add to cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 2: Moisturizing Body Wash */}
-              <div className="bestseller-card">
-                <div className="bestseller-img-box">
-                  <img 
-                    src="/brand/products/Simply Nourish Body Wash Image.webp" 
-                    alt="moisturizing body wash - simply nourish" 
-                    className="bestseller-img"
-                  />
-                </div>
-                <div className="bestseller-content">
-                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(1363)</span></div>
-                  <div className="bestseller-tag-text">new</div>
-                  <div className="bestseller-scent">simply nourish</div>
-                  <h3 className="bestseller-product-title">moisturizing body wash</h3>
-                  <div className="bestseller-footer">
-                    <span className="bestseller-price">$12.49</span>
-                    <button 
-                      type="button"
-                      className="bestseller-card-btn"
-                      onClick={() => addToCart({
-                        id: 'bestseller-2',
-                        name: 'moisturizing body wash - simply nourish',
-                        price: 12.49
-                      })}
-                    >
-                      add to cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 3: Concentrated Laundry Detergent */}
-              <div className="bestseller-card">
-                <div className="bestseller-img-box">
-                  <img 
-                    src="/brand/products/Ginger Mango Laundry Detergent Image.webp" 
-                    alt="concentrated laundry detergent - ginger mango" 
-                    className="bestseller-img"
-                  />
-                </div>
-                <div className="bestseller-content">
-                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(43)</span></div>
-                  <div className="bestseller-tag-text">best seller</div>
-                  <div className="bestseller-scent">ginger mango</div>
-                  <h3 className="bestseller-product-title">concentrated laundry detergent</h3>
-                  <div className="bestseller-footer">
-                    <span className="bestseller-price">$14.49</span>
-                    <button 
-                      type="button"
-                      className="bestseller-card-btn"
-                      onClick={() => addToCart({
-                        id: 'bestseller-3',
-                        name: 'concentrated laundry detergent - ginger mango',
-                        price: 14.49
-                      })}
-                    >
-                      add to cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              {/* Card 4: Men Body Wash */}
-              <div className="bestseller-card">
-                <div className="bestseller-img-box">
-                  <img 
-                    src="/brand/products/Sea + Surf Body Wash Image.webp" 
-                    alt="men body wash - sea + surf" 
-                    className="bestseller-img"
-                  />
-                </div>
-                <div className="bestseller-content">
-                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(1323)</span></div>
-                  <div className="bestseller-tag-text">new</div>
-                  <div className="bestseller-scent">sea + surf</div>
-                  <h3 className="bestseller-product-title">men body wash</h3>
-                  <div className="bestseller-footer">
-                    <span className="bestseller-price">$12.49</span>
-                    <button 
-                      type="button"
-                      className="bestseller-card-btn"
-                      onClick={() => addToCart({
-                        id: 'bestseller-4',
-                        name: 'men body wash - sea + surf',
-                        price: 12.49
-                      })}
-                    >
-                      add to cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-            </div>
-
           </div>
         </div>
       </section>

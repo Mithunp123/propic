@@ -49,7 +49,7 @@ const ArrowDownIcon = ({ className = 'w-3 h-3' }) => (
   </svg>
 )
 
-function Header({ cartCount, isHome }) {
+function Header({ cartCount, isHome, onCartClick }) {
   const [mobileMenuOpen, setMobileMenuOpen] = useState(false)
 
   return (
@@ -101,7 +101,18 @@ function Header({ cartCount, isHome }) {
 
           {/* Header Action Button (Right Side) */}
           <div className="header-actions">
-            <Link to="/cart" className="header-cart-action" aria-label="Shopping Cart">
+            <button
+              type="button"
+              className="header-cart-action"
+              onClick={(e) => {
+                if (onCartClick) {
+                  e.preventDefault()
+                  onCartClick()
+                }
+              }}
+              aria-label="Shopping Cart"
+              style={{ background: 'none', border: 'none', cursor: 'pointer', padding: 0 }}
+            >
               <div className="cart-icon-wrapper">
                 <svg className="header-cart-svg" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="2.2" strokeLinecap="round" strokeLinejoin="round">
                   <circle cx="9" cy="21" r="1" />
@@ -114,7 +125,7 @@ function Header({ cartCount, isHome }) {
                   </span>
                 )}
               </div>
-            </Link>
+            </button>
           </div>
         </div>
       </header>

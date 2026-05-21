@@ -5,45 +5,58 @@ import { getProductImageUrls, resolveMediaUrl } from '../../utils/api'
 function ProductCard({ product, onOpenViewer, addToCart }) {
   const imageUrls = getProductImageUrls(product)
   const primaryImageUrl = imageUrls[0] || ''
-  const description = product.description || 'Professional cleaning solution.'
 
   return (
-    <div className="showcase-card">
-      <div className="showcase-image">
+    <div className="product-showcase-card">
+      <div className="product-image-container">
+        {product.badge && (
+          <span className={`product-badge-bubble ${product.badge.toLowerCase()}`}>
+            {product.badge}
+          </span>
+        )}
         {primaryImageUrl ? (
           <button
             type="button"
-            className="showcase-image-trigger"
+            className="product-image-link"
             onClick={() => onOpenViewer(product, 0)}
             aria-label={`Open ${product.name} image gallery`}
           >
-            <div className="showcase-image-main">
-              <img src={resolveMediaUrl(primaryImageUrl)} alt={product.name} />
-            </div>
+            <img src={resolveMediaUrl(primaryImageUrl)} alt={product.name} className="product-main-img" />
           </button>
         ) : (
-          <div className="showcase-image-empty">🧴</div>
+          <div className="product-image-empty">🧴</div>
         )}
+
+        {/* Add to Cart Button moved to price row for right-of-price placement */}
       </div>
-      <div className="showcase-content">
-        <span className="category">{product.category || 'General'}</span>
-        <h3>{product.name}</h3>
-        <p className="showcase-description">{description}</p>
-        <button
-          type="button"
-          className="showcase-details-trigger"
-          onClick={() => onOpenViewer(product, 0, true)}
-        >
-          View full info
-        </button>
-        <strong>{money(product.price)}</strong>
-        <button
-          className="button primary"
-          style={{ width: '100%', padding: '10px' }}
-          onClick={() => addToCart(product)}
-        >
-          Add to cart
-        </button>
+      
+      <div className="product-card-details">
+        {/* Rating Row */}
+        <div className="product-card-rating">
+          <span className="stars-fill">★ ★ ★ ★ ★</span>
+          <span className="review-count">({product.review_count || 0})</span>
+        </div>
+
+        {/* Title */}
+        <h3 className="product-card-title" onClick={() => onOpenViewer(product, 0, true)}>
+          {product.name ? product.name.toLowerCase() : ''}
+        </h3>
+
+        {/* Price Row */}
+        <div className="product-price-container">
+          {product.original_price && (
+            <span className="price-compare">{money(product.original_price)}</span>
+          )}
+          <span className="price-current">{money(product.price)}</span>
+
+          <button
+            className="product-add-to-cart-btn"
+            onClick={() => addToCart(product)}
+            aria-label={`Add ${product.name} to cart`}
+          >
+            add to cart
+          </button>
+        </div>
       </div>
     </div>
   )
