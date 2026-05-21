@@ -1,11 +1,22 @@
 import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
+import { fetchBestsellingProducts, resolveMediaUrl, getProductImageUrls } from '../utils/api'
+import { money } from '../utils/format'
 
 function HomePage({ addToCart }) {
   const collectionsGridRef = useRef(null)
   const thumbRef = useRef(null)
   const testimonialScrollRef = useRef(null)
   const [activeTestimonial, setActiveTestimonial] = useState(0)
+  const [bestsellers, setBestsellers] = useState([])
+  const [bestsellersLoading, setBestsellersLoading] = useState(true)
+
+  useEffect(() => {
+    fetchBestsellingProducts(4)
+      .then((data) => setBestsellers(data))
+      .catch(() => setBestsellers([]))
+      .finally(() => setBestsellersLoading(false))
+  }, [])
 
   useEffect(() => {
     const slider = collectionsGridRef.current
@@ -158,12 +169,12 @@ function HomePage({ addToCart }) {
             <span className="hero-badge-tag">new!</span>
             <h1 className="hero-title">
               break up with<br />
-              basic dish soap.<br />
-              meet <span className="gradient-text purple-teal">super shine.</span>
+              stubborn dirt.<br />
+              meet <span className="gradient-text purple-teal">super clean.</span>
             </h1>
 
             <Link to="/products" className="hero-primary-cta purple-btn">
-              <span className="cta-text">shop dish soap</span>
+              <span className="cta-text">shop cleaners</span>
             </Link>
           </div>
         </div>
@@ -274,64 +285,64 @@ function HomePage({ addToCart }) {
         </div>
       </section>
 
-      {/* Brand Discovery Section: "see what’s new from method" */}
+      {/* Brand Discovery Section */}
       <section className="collection-cards-section">
         <div className="collection-cards-container">
           <div className="collection-cards-header">
             <h2 className="collection-cards-title">
-              see what’s new from method
+              see what’s new in home cleaning
             </h2>
           </div>
 
           <div className="collection-cards-grid">
-            {/* Card 1: Body wash regimen */}
+            {/* Card 1 */}
             <div className="collection-card">
               <img 
                 src="/brand/products/whats_new_-_ulta.webp" 
-                alt="create your better skin + body regimen" 
+                alt="create your better home cleaning regimen" 
                 className="collection-card-img" 
               />
               <div className="collection-card-overlay">
                 <div className="collection-card-content">
                   <h3 className="collection-card-title-text">
                     create your better<br />
-                    skin + body regimen
+                    home cleaning regimen
                   </h3>
                   <p className="collection-card-desc">
-                    meet our body wash tonics. an innovative collection for your specific skincare needs. mix and match to create the perfect regimen for your unique skin.
+                    meet our deep cleaning formulas. an innovative collection for your specific cleaning needs. mix and match to create the perfect regimen for your home.
                   </p>
                   <Link 
                     to="/products" 
                     className="collection-card-btn"
                   >
-                    shop body tonics
+                    shop floor cleaners
                   </Link>
                 </div>
               </div>
             </div>
 
-            {/* Card 2: Hydrating serum hand wash */}
+            {/* Card 2 */}
             <div className="collection-card">
               <img 
                 src="/brand/products/hydrating-serum-new--desktop.webp" 
-                alt="hydrating serum hand wash" 
+                alt="multi-surface everyday cleaner" 
                 className="collection-card-img" 
               />
               <div className="collection-card-overlay">
                 <div className="collection-card-content">
                   <span className="collection-card-tag">new</span>
                   <h3 className="collection-card-title-text">
-                    hydrating serum<br />
-                    hand wash
+                    multi-surface<br />
+                    everyday cleaner
                   </h3>
                   <p className="collection-card-desc">
-                    with a dermatologist-tested formula and skincare inspired ingredients, this hydrating serum maintains skin’s microbiome and smells delightful.
+                    with a plant-based formula and inspired ingredients, this multi-surface spray maintains your home's shine and smells delightful.
                   </p>
                   <Link 
                     to="/products" 
                     className="collection-card-btn"
                   >
-                    shop hand serum
+                    shop multi-surface
                   </Link>
                 </div>
               </div>
@@ -340,34 +351,34 @@ function HomePage({ addToCart }) {
         </div>
       </section>
 
-      {/* Bundles Section: "shop bundles for your skin needs" */}
+      {/* Bundles Section */}
       <section className="bundles-section">
         <div className="bundles-container">
           <div className="bundles-header">
             <h2 className="bundles-title">
-              shop bundles for your skin needs
+              shop bundles for your home needs
             </h2>
             <p className="bundles-subtitle">
-              your skin deserves a regimen built for you. browse our bundles to create your custom routine.
+              your home deserves a regimen built for it. browse our bundles to create your custom routine.
             </p>
           </div>
 
           <div className="bundles-grid">
-            {/* Card 1: The Soft Radiance Bundle */}
+            {/* Card 1 */}
             <div className="bundle-card">
               <div className="bundle-card-img-box">
                 <img 
                   src="https://methodproducts.com/cdn/shop/files/3ea4251ebeb625eaf3d4c2c013aebc35ac6e2786_1.jpg?crop=center&height=1200&v=1772813719&width=1200" 
-                  alt="the soft radiance bundle" 
+                  alt="the ultimate floor bundle" 
                   className="bundle-card-img" 
                 />
               </div>
               <div className="bundle-card-text-box">
                 <h3 className="bundle-card-title">
-                  the soft<br />radiance bundle
+                  the ultimate<br />floor bundle
                 </h3>
                 <p className="bundle-card-desc">
-                  for glowy, dewy skin
+                  for spotless, shiny floors
                 </p>
                 <Link 
                   to="/products" 
@@ -378,21 +389,21 @@ function HomePage({ addToCart }) {
               </div>
             </div>
 
-            {/* Card 2: The Smooth Hydration Bundle */}
+            {/* Card 2 */}
             <div className="bundle-card">
               <div className="bundle-card-img-box">
                 <img 
                   src="https://methodproducts.com/cdn/shop/files/Rectangle_5_03c2f127-29ea-478f-a7b7-add531e227e7.png?crop=center&height=538&v=1773258554&width=464" 
-                  alt="the smooth hydration bundle" 
+                  alt="the streak-free glass bundle" 
                   className="bundle-card-img" 
                 />
               </div>
               <div className="bundle-card-text-box">
                 <h3 className="bundle-card-title">
-                  the smooth<br />hydration bundle
+                  the streak-free<br />glass bundle
                 </h3>
                 <p className="bundle-card-desc">
-                  for clear, hydrated skin
+                  for crystal clear mirrors
                 </p>
                 <Link 
                   to="/products" 
@@ -403,21 +414,21 @@ function HomePage({ addToCart }) {
               </div>
             </div>
 
-            {/* Card 3: The Dewy Glow Bundle */}
+            {/* Card 3 */}
             <div className="bundle-card">
               <div className="bundle-card-img-box">
                 <img 
                   src="https://methodproducts.com/cdn/shop/files/a87ef715583177b3724044b57ca2a92195892e2d.jpg?crop=center&height=1200&v=1773258629&width=1200" 
-                  alt="the dewy glow bundle" 
+                  alt="the deep clean bathroom bundle" 
                   className="bundle-card-img" 
                 />
               </div>
               <div className="bundle-card-text-box">
                 <h3 className="bundle-card-title">
-                  the dewy<br />glow bundle
+                  the deep clean<br />bathroom bundle
                 </h3>
                 <p className="bundle-card-desc">
-                  for smooth, hydrated skin
+                  for a sparkling bathroom
                 </p>
                 <Link 
                   to="/products" 
@@ -452,137 +463,59 @@ function HomePage({ addToCart }) {
 
           <div className="bestsellers-grid-wrap">
             <div className="bestsellers-grid">
-              <div className="bestseller-card">
-                <div className="bestseller-img-box">
-                  <img
-                    src="https://methodproducts.com/cdn/shop/files/MTHD_GHW_Refill_34oz_SweetWater_Front_US_378682__13360.1737652984.386.513_122dd232-c8d7-43e9-907c-c6d1ea521685.jpg?v=1770160914"
-                    alt="gel hand wash refill - sweet water"
-                    className="bestseller-img"
-                  />
-                </div>
-                <div className="bestseller-content">
-                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(54)</span></div>
-                  <div className="bestseller-tag-text">best seller</div>
-                  <div className="bestseller-scent">sweet water</div>
-                  <h3 className="bestseller-product-title">gel hand wash refill</h3>
-                  <div className="bestseller-footer">
-                    <span className="bestseller-price">$7.49</span>
-                    <button
-                      type="button"
-                      className="bestseller-card-btn"
-                      onClick={() => addToCart({
-                        id: 'bestseller-1',
-                        name: 'gel hand wash refill - sweet water',
-                        price: 7.49,
-                        image_url: 'https://methodproducts.com/cdn/shop/files/MTHD_GHW_Refill_34oz_SweetWater_Front_US_378682__13360.1737652984.386.513_122dd232-c8d7-43e9-907c-c6d1ea521685.jpg?v=1770160914',
-                        fragrance: 'sweet water',
-                        category: 'hand wash'
-                      })}
-                    >
-                      add to cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bestseller-card">
-                <div className="bestseller-img-box">
-                  <img
-                    src="/brand/products/Simply Nourish Body Wash Image.webp"
-                    alt="body wash - simply nourish"
-                    className="bestseller-img"
-                  />
-                </div>
-                <div className="bestseller-content">
-                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(1363)</span></div>
-                  <div className="bestseller-tag-text">new</div>
-                  <div className="bestseller-scent">simply nourish</div>
-                  <h3 className="bestseller-product-title">body wash</h3>
-                  <div className="bestseller-footer">
-                    <span className="bestseller-price">$12.49</span>
-                    <button
-                      type="button"
-                      className="bestseller-card-btn"
-                      onClick={() => addToCart({
-                        id: 'bestseller-2',
-                        name: 'body wash - simply nourish',
-                        price: 12.49,
-                        image_url: '/brand/products/Simply Nourish Body Wash Image.webp',
-                        fragrance: 'simply nourish',
-                        category: 'body wash'
-                      })}
-                    >
-                      add to cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bestseller-card">
-                <div className="bestseller-img-box">
-                  <img
-                    src="/brand/products/Ginger Mango Laundry Detergent Image.webp"
-                    alt="laundry detergent - ginger mango"
-                    className="bestseller-img"
-                  />
-                </div>
-                <div className="bestseller-content">
-                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(43)</span></div>
-                  <div className="bestseller-tag-text">best seller</div>
-                  <div className="bestseller-scent">ginger mango</div>
-                  <h3 className="bestseller-product-title">laundry detergent</h3>
-                  <div className="bestseller-footer">
-                    <span className="bestseller-price">$14.49</span>
-                    <button
-                      type="button"
-                      className="bestseller-card-btn"
-                      onClick={() => addToCart({
-                        id: 'bestseller-3',
-                        name: 'laundry detergent - ginger mango',
-                        price: 14.49,
-                        image_url: '/brand/products/Ginger Mango Laundry Detergent Image.webp',
-                        fragrance: 'ginger mango',
-                        category: 'home cleaning'
-                      })}
-                    >
-                      add to cart
-                    </button>
-                  </div>
-                </div>
-              </div>
-
-              <div className="bestseller-card">
-                <div className="bestseller-img-box">
-                  <img
-                    src="/brand/products/Sea + Surf Body Wash Image.webp"
-                    alt="body wash - sea + surf"
-                    className="bestseller-img"
-                  />
-                </div>
-                <div className="bestseller-content">
-                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(1323)</span></div>
-                  <div className="bestseller-tag-text">new</div>
-                  <div className="bestseller-scent">sea + surf</div>
-                  <h3 className="bestseller-product-title">body wash</h3>
-                  <div className="bestseller-footer">
-                    <span className="bestseller-price">$12.49</span>
-                    <button
-                      type="button"
-                      className="bestseller-card-btn"
-                      onClick={() => addToCart({
-                        id: 'bestseller-4',
-                        name: 'body wash - sea + surf',
-                        price: 12.49,
-                        image_url: '/brand/products/Sea + Surf Body Wash Image.webp',
-                        fragrance: 'sea + surf',
-                        category: 'body wash'
-                      })}
-                    >
-                      add to cart
-                    </button>
-                  </div>
-                </div>
-              </div>
+              {bestsellersLoading ? (
+                <div className="bestseller-loading">Loading bestsellers...</div>
+              ) : bestsellers.length > 0 ? (
+                bestsellers.map((product) => {
+                  const images = getProductImageUrls(product)
+                  const imgSrc = images.length > 0 ? resolveMediaUrl(images[0]) : ''
+                  return (
+                    <div className="bestseller-card" key={product.id}>
+                      <div className="bestseller-img-box">
+                        {imgSrc ? (
+                          <img
+                            src={imgSrc}
+                            alt={product.name}
+                            className="bestseller-img"
+                          />
+                        ) : (
+                          <div className="bestseller-img-placeholder">🧴</div>
+                        )}
+                      </div>
+                      <div className="bestseller-content">
+                        <div className="bestseller-reviews">★★★★★ <span className="review-count">({product.review_count || 0})</span></div>
+                        <div className="bestseller-tag-text">{product.badge || 'best seller'}</div>
+                        <div className="bestseller-scent">{product.fragrance || product.category || ''}</div>
+                        <h3 className="bestseller-product-title">{product.name}</h3>
+                        <div className="bestseller-footer">
+                          <span className="bestseller-price">
+                            {money(product.price)}
+                            {product.original_price && (
+                              <span className="bestseller-original-price">{money(product.original_price)}</span>
+                            )}
+                          </span>
+                          <button
+                            type="button"
+                            className="bestseller-card-btn"
+                            onClick={() => addToCart({
+                              id: product.id,
+                              name: product.name,
+                              price: product.price,
+                              image_url: images[0] || product.image_url,
+                              fragrance: product.fragrance || '',
+                              category: product.category || ''
+                            })}
+                          >
+                            add to cart
+                          </button>
+                        </div>
+                      </div>
+                    </div>
+                  )
+                })
+              ) : (
+                <div className="bestseller-loading">No bestsellers available</div>
+              )}
             </div>
           </div>
         </div>
@@ -607,17 +540,17 @@ function HomePage({ addToCart }) {
         <div className="explore-slider">
           <div className="collections-grid" ref={collectionsGridRef}>
             
-            {/* CARD 1: Spa Core */}
+            {/* CARD 1 */}
             <div className="explore-collection-card spa-core">
               <div className="explore-card-inner">
                 <div className="explore-collection-image">
                   <img
                     src="https://methodproducts.com/cdn/shop/collections/gradient-are-so-spa-core_a7d0978b-dc8a-4161-9150-885b9841c5be.jpg?v=1744909488"
-                    alt="are so spa core"
+                    alt="tough on grease"
                   />
                 </div>
                 <div className="explore-collection-content">
-                  <h3>are so spa core</h3>
+                  <h3>tough on grease</h3>
                   <Link to="/products" className="explore-card-btn">
                     view products
                   </Link>
@@ -625,17 +558,17 @@ function HomePage({ addToCart }) {
               </div>
             </div>
 
-            {/* CARD 2: Earthy Surfy */}
+            {/* CARD 2 */}
             <div className="explore-collection-card earthy-surfy">
               <div className="explore-card-inner">
                 <div className="explore-collection-image">
                   <img
                     src="https://methodproducts.com/cdn/shop/collections/gradient-shower-me-earthy_908cbed8-81fe-4f63-b5d1-0adb7b3c7247.jpg?v=1742455043"
-                    alt="shower me earthy + surfy"
+                    alt="sparkling clean bathroom"
                   />
                 </div>
                 <div className="explore-collection-content">
-                  <h3>shower me earthy + surfy</h3>
+                  <h3>sparkling clean bathroom</h3>
                   <Link to="/products" className="explore-card-btn">
                     view products
                   </Link>
@@ -643,17 +576,17 @@ function HomePage({ addToCart }) {
               </div>
             </div>
 
-            {/* CARD 3: Smell like Vacation */}
+            {/* CARD 3 */}
             <div className="explore-collection-card vacation">
               <div className="explore-card-inner">
                 <div className="explore-collection-image">
                   <img
                     src="https://methodproducts.com/cdn/shop/collections/gradient-smells-like-a-vacation_7825f5e5-2d54-4c9a-b6e8-60f649714aeb.jpg?v=1744909573"
-                    alt="smell like vacation"
+                    alt="fresh citrus floors"
                   />
                 </div>
                 <div className="explore-collection-content">
-                  <h3>smell like vacation</h3>
+                  <h3>fresh citrus floors</h3>
                   <Link to="/products" className="explore-card-btn">
                     view products
                   </Link>
@@ -661,17 +594,17 @@ function HomePage({ addToCart }) {
               </div>
             </div>
 
-            {/* CARD 4: Tickle me Pink */}
+            {/* CARD 4 */}
             <div className="explore-collection-card pink">
               <div className="explore-card-inner">
                 <div className="explore-collection-image">
                   <img
                     src="https://methodproducts.com/cdn/shop/collections/gradient-tickle-me-pink_fb5343bc-dae0-4748-8251-928d002f935b.jpg?v=1744909601"
-                    alt="tickle me pink"
+                    alt="streak-free shine"
                   />
                 </div>
                 <div className="explore-collection-content">
-                  <h3>tickle me pink</h3>
+                  <h3>streak-free shine</h3>
                   <Link to="/products" className="explore-card-btn">
                     view products
                   </Link>
@@ -679,17 +612,17 @@ function HomePage({ addToCart }) {
               </div>
             </div>
 
-            {/* CARD 5: Pump with Purpose */}
+            {/* CARD 5 */}
             <div className="explore-collection-card pump">
               <div className="explore-card-inner">
                 <div className="explore-collection-image">
                   <img
                     src="https://methodproducts.com/cdn/shop/collections/gradient-pump-with-purpose_b2f99c1c-6cbd-4138-a25e-51441f3a84b9.jpg?v=1744909623"
-                    alt="pump with purpose"
+                    alt="everyday essentials"
                   />
                 </div>
                 <div className="explore-collection-content">
-                  <h3>pump with purpose</h3>
+                  <h3>everyday essentials</h3>
                   <Link to="/products" className="explore-card-btn">
                     view products
                   </Link>
@@ -724,7 +657,7 @@ function HomePage({ addToCart }) {
                 <div className="rave-img-box">
                   <img
                     src="https://methodproducts.com/cdn/shop/files/image_ratios_6.jpg?crop=center&height=249&v=1742825550&width=350"
-                    alt="so moisturized"
+                    alt="so spotless"
                     className="rave-card-img"
                     loading="lazy"
                   />
@@ -737,9 +670,9 @@ function HomePage({ addToCart }) {
                       </svg>
                     ))}
                   </div>
-                  <h3 className="rave-card-title">so moisturized</h3>
+                  <h3 className="rave-card-title">so spotless</h3>
                   <p className="rave-card-quote">
-                    “I love this shampoo!... My hair has never felt so healthy and nourished!” -teef8
+                    “I love this floor cleaner!... My floors have never looked so spotless and shiny!” -teef8
                   </p>
                   <Link to="/products" className="rave-card-btn">shop now</Link>
                 </div>
@@ -817,7 +750,7 @@ function HomePage({ addToCart }) {
                   </div>
                   <h3 className="rave-card-title">amazing</h3>
                   <p className="rave-card-quote">
-                    “Lathers well, smells amazing, scent actually lasts on the skin, moisturizes well” -Mickey
+                    “Cleans well, smells amazing, scent actually lasts in the room, moisturizes well” -Mickey
                   </p>
                   <Link to="/products" className="rave-card-btn">shop now</Link>
                 </div>

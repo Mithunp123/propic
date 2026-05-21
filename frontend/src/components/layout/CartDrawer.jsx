@@ -1,7 +1,7 @@
 import { useEffect, useState, useMemo } from 'react'
 import { Link, useNavigate } from 'react-router-dom'
 import { money } from '../../utils/format'
-import { requestJson, resolveMediaUrl } from '../../utils/api'
+import { requestJson, resolveMediaUrl, getProductImageUrls } from '../../utils/api'
 
 function CartDrawer({ isOpen, onClose, cart, updateQuantity, removeItem, addToCart }) {
   const navigate = useNavigate()
@@ -30,8 +30,8 @@ function CartDrawer({ isOpen, onClose, cart, updateQuantity, removeItem, addToCa
   }, [cart])
 
   // Shipping & Gift thresholds
-  const shippingThreshold = 50.00
-  const giftThreshold = 61.00
+  const shippingThreshold = 500
+  const giftThreshold = 750
 
   const shippingRemaining = Math.max(0, shippingThreshold - subtotal)
   const giftRemaining = Math.max(0, giftThreshold - subtotal)
@@ -192,7 +192,7 @@ function CartDrawer({ isOpen, onClose, cart, updateQuantity, removeItem, addToCa
                 {recommendations.map((prod) => (
                   <div key={prod.id} className="cross-sell-card">
                     <div className="cross-sell-image">
-                      <img src={resolveMediaUrl(prod.image_url)} alt={prod.name} />
+                      <img src={resolveMediaUrl((getProductImageUrls(prod)[0]) || prod.image_url)} alt={prod.name} />
                     </div>
                     <div className="cross-sell-content">
                       <h5>{prod.name}</h5>

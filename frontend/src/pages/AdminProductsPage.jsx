@@ -5,15 +5,14 @@ import { money } from '../utils/format'
 import './AdminProductsPage.css'
 
 const PRODUCT_CATEGORIES = [
-  'New Launches',
-  'New Launches of Experts',
-  'Mega Value Packs',
-  'Cleaning',
-  'Personal Care',
-  'Essentials',
-  'Kitchen',
-  'Bathroom',
-  'Laundry',
+  'Floor Cleaners',
+  'Glass Cleaners',
+  'Multi-Surface Sprays',
+  'Bathroom Cleaners',
+  'Kitchen Cleaners',
+  'Heavy Duty Cleaners',
+  'Carpet Cleaners',
+  'Bundles',
   'Other',
 ]
 
@@ -30,10 +29,15 @@ function AdminProductsPage() {
     name: '',
     description: '',
     price: '',
+    original_price: '',
     category: '',
     categoryCustom: '',
     stock: '0',
     featured: false,
+    badge: '',
+    fragrance: '',
+    color_code: '',
+    rating: '',
     imageFiles: [],
   })
 
@@ -57,19 +61,29 @@ function AdminProductsPage() {
       name: product.name,
       description: product.description || '',
       price: product.price,
+      original_price: product.original_price || '',
       category: PRODUCT_CATEGORIES.includes(product.category) ? product.category : (product.category ? 'Other' : ''),
       categoryCustom: PRODUCT_CATEGORIES.includes(product.category) ? '' : (product.category || ''),
       stock: product.stock,
       featured: !!product.featured,
+      badge: product.badge || '',
+      fragrance: product.fragrance || '',
+      color_code: product.color_code || '',
+      rating: product.rating || '',
       imageFiles: [],
     } : {
       name: '',
       description: '',
       price: '',
+      original_price: '',
       category: '',
       categoryCustom: '',
       stock: '0',
       featured: false,
+      badge: '',
+      fragrance: '',
+      color_code: '',
+      rating: '',
       imageFiles: [],
     })
     setProductModalOpen(true)
@@ -161,6 +175,7 @@ function AdminProductsPage() {
                 <th>Name</th>
                 <th>Category</th>
                 <th>Price</th>
+                <th>MRP</th>
                 <th>Images</th>
                 <th>Stock</th>
                 <th>Featured</th>
@@ -170,7 +185,7 @@ function AdminProductsPage() {
             <tbody>
               {isLoading ? (
                 <tr>
-                  <td colSpan="8" className="empty-table inline-loader">
+                  <td colSpan="9" className="empty-table inline-loader">
                     <span className="loading-spinner" aria-hidden="true" />
                     <span>Loading products...</span>
                   </td>
@@ -184,6 +199,7 @@ function AdminProductsPage() {
                   </td>
                   <td>{product.category || 'N/A'}</td>
                   <td>{money(product.price)}</td>
+                  <td>{product.original_price ? money(product.original_price) : '—'}</td>
                   <td>{(product.image_urls?.length || (product.image_url ? 1 : 0))} image{(product.image_urls?.length || (product.image_url ? 1 : 0)) === 1 ? '' : 's'}</td>
                   <td>{product.stock}</td>
                   <td>{product.featured ? 'Yes' : 'No'}</td>
@@ -196,7 +212,7 @@ function AdminProductsPage() {
                 </tr>
               )) : (
                 <tr>
-                  <td colSpan="8" className="empty-table">No products match this filter.</td>
+                  <td colSpan="9" className="empty-table">No products match this filter.</td>
                 </tr>
               )}
             </tbody>
@@ -224,6 +240,17 @@ function AdminProductsPage() {
                 </select>
                 <input className="field" value={form.price} onChange={(event) => setForm({ ...form, price: event.target.value })} placeholder="Price" required />
                 <input className="field" value={form.stock} onChange={(event) => setForm({ ...form, stock: event.target.value })} placeholder="Stock" />
+              </div>
+              <div className="form-grid">
+                <input className="field" value={form.original_price} onChange={(event) => setForm({ ...form, original_price: event.target.value })} placeholder="Original Price (strikethrough)" />
+                <input className="field" value={form.fragrance} onChange={(event) => setForm({ ...form, fragrance: event.target.value })} placeholder="Fragrance" />
+                <select className="field" value={form.badge} onChange={(event) => setForm({ ...form, badge: event.target.value })}>
+                  <option value="">No badge</option>
+                  <option value="new">New</option>
+                  <option value="sale">Sale</option>
+                  <option value="best seller">Best Seller</option>
+                </select>
+                <input className="field" type="color" value={form.color_code || '#ffffff'} onChange={(event) => setForm({ ...form, color_code: event.target.value })} title="Color Code" />
               </div>
               {form.category === 'Other' ? (
                 <input className="field" value={form.categoryCustom} onChange={(event) => setForm({ ...form, categoryCustom: event.target.value })} placeholder="Enter custom category" />

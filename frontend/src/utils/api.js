@@ -51,3 +51,15 @@ export function getProductImageUrls(product) {
   const normalized = values.map((value) => String(value).trim()).filter(Boolean)
   return Array.from(new Set(normalized))
 }
+
+export function fetchFeaturedProducts(limit = 8) {
+  return requestJson(`/api/products/featured?limit=${limit}`)
+}
+
+export function fetchBestsellingProducts(limit = 4) {
+  return requestJson(`/api/products/bestselling?limit=${limit}`)
+}
+
+export function fetchAllProducts() {
+  return requestJson('/api/products')
+}

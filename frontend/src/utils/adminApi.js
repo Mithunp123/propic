@@ -37,6 +37,11 @@ export async function saveAdminProduct(token, productId, form) {
   payload.append('category', form.category)
   payload.append('stock', form.stock)
   payload.append('featured', form.featured ? 'on' : '')
+  if (form.original_price) payload.append('original_price', form.original_price)
+  if (form.badge) payload.append('badge', form.badge)
+  if (form.fragrance) payload.append('fragrance', form.fragrance)
+  if (form.color_code) payload.append('color_code', form.color_code)
+  if (form.rating) payload.append('rating', form.rating)
   ;(form.imageFiles || []).forEach((file) => payload.append('images', file))
 
   const response = await fetch(`${API_BASE}${productId ? `/api/admin/products/${productId}` : '/api/admin/products'}`, {

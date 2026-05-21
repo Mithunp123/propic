@@ -63,6 +63,11 @@ def create_app():
         limit = int(request.args.get("limit", 8))
         return jsonify(db.get_featured_products(limit=limit))
 
+    @app.get("/api/products/bestselling")
+    def api_bestselling_products():
+        limit = int(request.args.get("limit", 4))
+        return jsonify(db.get_top_selling_products(limit=limit))
+
     @app.get("/api/products/<int:product_id>")
     def api_product_detail(product_id):
         product = db.get_product_by_id(product_id)
@@ -155,6 +160,10 @@ def create_app():
         uploaded_images = _save_product_uploads(request.files.getlist("images") or request.files.getlist("image"))
         image_url = uploaded_images[0] if uploaded_images else None
 
+        original_price_raw = request.form.get("original_price")
+        rating_raw = request.form.get("rating")
+        review_count_raw = request.form.get("review_count")
+
         product_id = db.add_product(
             name=name,
             description=request.form.get("description"),
@@ -164,6 +173,12 @@ def create_app():
             category=request.form.get("category"),
             stock=int(request.form.get("stock", 0)),
             featured=request.form.get("featured") == "on",
+            rating=float(rating_raw) if rating_raw else None,
+            review_count=int(review_count_raw) if review_count_raw else 0,
+            original_price=float(original_price_raw) if original_price_raw else None,
+            fragrance=request.form.get("fragrance") or None,
+            badge=request.form.get("badge") or None,
+            color_code=request.form.get("color_code") or None,
         )
         return jsonify({"product_id": product_id}), 201
 
@@ -182,6 +197,10 @@ def create_app():
         image_urls = current_images + uploaded_images if uploaded_images else current_images
         image_url = image_urls[0] if image_urls else None
 
+        original_price_raw = payload.get("original_price", current.get("original_price"))
+        rating_raw = payload.get("rating", current.get("rating"))
+        review_count_raw = payload.get("review_count", current.get("review_count", 0))
+
         db.update_product(
             product_id=product_id,
             name=payload.get("name", current["name"]),
@@ -192,6 +211,12 @@ def create_app():
             category=payload.get("category", current.get("category")),
             stock=int(payload.get("stock", current.get("stock", 0))),
             featured=str(payload.get("featured", current.get("featured", False))).lower() in {"1", "true", "on"},
+            rating=float(rating_raw) if rating_raw is not None else None,
+            review_count=int(review_count_raw) if review_count_raw is not None else 0,
+            original_price=float(original_price_raw) if original_price_raw is not None else None,
+            fragrance=payload.get("fragrance", current.get("fragrance")) or None,
+            badge=payload.get("badge", current.get("badge")) or None,
+            color_code=payload.get("color_code", current.get("color_code")) or None,
         )
         return jsonify({"ok": True})
 

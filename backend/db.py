@@ -213,6 +213,23 @@ def get_featured_products(limit=8):
     return [serialize_product(product) for product in products]
 
 
+def get_top_selling_products(limit=4):
+    query = """
+        SELECT p.*, COALESCE(SUM(oi.quantity), 0) AS total_sold
+        FROM products p
+        LEFT JOIN order_items oi ON p.id = oi.product_id
+        WHERE p.stock > 0
+        GROUP BY p.id
+        ORDER BY total_sold DESC, p.created_at DESC
+        LIMIT %s
+    """
+    products = _product_rows(query, (limit,))
+    # If no orders yet, fallback to featured or newest products
+    if not products or all(p.get("total_sold", 0) == 0 for p in products):
+        return get_featured_products(limit)
+    return [serialize_product(product) for product in products]
+
+
 def get_all_products(include_out_of_stock=False):
     query = """
         SELECT *
@@ -229,30 +246,37 @@ def get_product_by_id(product_id):
     return serialize_product(product)
 
 
-def add_product(name, description, price, image_url, image_urls, category, stock, featured=False):
+def add_product(name, description, price, image_url, image_urls, category, stock, featured=False,
+                rating=None, review_count=0, original_price=None, fragrance=None, badge=None, color_code=None):
     image_urls_json = json.dumps(image_urls or ([image_url] if image_url else []))
     with get_db_cursor(commit=True) as cursor:
         cursor.execute(
             """
-            INSERT INTO products (name, description, price, image_url, image_urls, category, stock, featured)
-            VALUES (%s, %s, %s, %s, %s, %s, %s, %s)
+            INSERT INTO products (name, description, price, image_url, image_urls, category, stock, featured,
+                                 rating, review_count, original_price, fragrance, badge, color_code)
+            VALUES (%s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s, %s)
             """,
-            (name, description, price, image_url, image_urls_json, category, stock, featured),
+            (name, description, price, image_url, image_urls_json, category, stock, featured,
+             rating, review_count, original_price, fragrance, badge, color_code),
         )
         return cursor.lastrowid
 
 
-def update_product(product_id, name, description, price, image_url, image_urls, category, stock, featured):
+def update_product(product_id, name, description, price, image_url, image_urls, category, stock, featured,
+                   rating=None, review_count=0, original_price=None, fragrance=None, badge=None, color_code=None):
     image_urls_json = json.dumps(image_urls or ([image_url] if image_url else []))
     with get_db_cursor(commit=True) as cursor:
         cursor.execute(
             """
             UPDATE products
             SET name = %s, description = %s, price = %s, image_url = %s,
-                image_urls = %s, category = %s, stock = %s, featured = %s
+                image_urls = %s, category = %s, stock = %s, featured = %s,
+                rating = %s, review_count = %s, original_price = %s,
+                fragrance = %s, badge = %s, color_code = %s
             WHERE id = %s
             """,
-            (name, description, price, image_url, image_urls_json, category, stock, featured, product_id),
+            (name, description, price, image_url, image_urls_json, category, stock, featured,
+             rating, review_count, original_price, fragrance, badge, color_code, product_id),
         )
         return cursor.rowcount
 
