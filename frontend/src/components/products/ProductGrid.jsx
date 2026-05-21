@@ -15,14 +15,9 @@ function ProductCard({ product, onOpenViewer, addToCart }) {
           </span>
         )}
         {primaryImageUrl ? (
-          <button
-            type="button"
-            className="product-image-link"
-            onClick={() => onOpenViewer(product, 0)}
-            aria-label={`Open ${product.name} image gallery`}
-          >
+          <div className="product-image-link" aria-hidden="true">
             <img src={resolveMediaUrl(primaryImageUrl)} alt={product.name} className="product-main-img" />
-          </button>
+          </div>
         ) : (
           <div className="product-image-empty">🧴</div>
         )}

@@ -4933,19 +4933,16 @@ body, .app-shell {
   font-size: 1rem;
   text-decoration: none;
   border-radius: 999px;
-  border: 1.5px solid transparent;
+  border: 1.5px solid #000000;
   background: #ffffff;
-  background-image: linear-gradient(#ffffff, #ffffff), linear-gradient(135deg, #d300c5, #00b3b0);
-  background-origin: border-box;
-  background-clip: padding-box, border-box;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
   text-transform: lowercase;
-  box-shadow: 0 4px 12px rgba(211, 0, 197, 0.08);
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
 }
 
 .view-all-btn:hover {
   transform: translateY(-2px);
-  box-shadow: 0 8px 24px rgba(211, 0, 197, 0.2), 0 8px 24px rgba(0, 179, 176, 0.15);
+  box-shadow: 0 8px 24px rgba(0, 0, 0, 0.16);
   color: #000000;
 }
 
@@ -5963,27 +5960,35 @@ body, .app-shell {
   min-width: 140px;
   height: 40px;
   padding: 0 20px;
-  background: linear-gradient(135deg, #d300c5, #00b3b0) !important;
-  color: #ffffff !important; /* solid white text */
-  border: none;
+  background: linear-gradient(#ffffff, #ffffff) padding-box, linear-gradient(135deg, #d300c5, #00b3b0) border-box !important;
+  background-origin: border-box;
+  background-clip: padding-box, border-box;
+  color: #000000 !important;
+  border: 1.5px solid transparent;
   border-radius: 999px;
-  font-size: 0.95rem;
+  font-family: 'Space Grotesk', sans-serif;
+  font-size: 1rem;
   font-weight: 700;
   text-transform: lowercase;
   cursor: pointer;
   transition: all 0.3s cubic-bezier(0.165, 0.84, 0.44, 1);
-  box-shadow: 0 4px 12px rgba(211, 0, 197, 0.25);
+  box-shadow: 0 4px 12px rgba(211, 0, 197, 0.08);
   z-index: 20;
   display: inline-flex;
   align-items: center;
   justify-content: center;
   white-space: nowrap;
+  appearance: none;
+  -webkit-appearance: none;
+  outline: none;
 }
 
-.product-add-to-cart-btn:hover {
-  transform: translateY(-6px);
-  box-shadow: 0 8px 20px rgba(211, 0, 197, 0.4);
-  filter: brightness(1.08);
+.product-add-to-cart-btn:hover,
+.product-add-to-cart-btn:focus,
+.product-add-to-cart-btn:active {
+  transform: translateY(-50%);
+  box-shadow: 0 8px 24px rgba(211, 0, 197, 0.2), 0 8px 24px rgba(0, 179, 176, 0.15);
+  color: #000000 !important;
 }
 
 /* ensure price container anchors absolute button */
