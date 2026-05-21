@@ -89,7 +89,7 @@ function App() {
 
       <main className={`${isAdminRoute ? 'page-wrap admin-page-wrap' : 'page-wrap'} ${isHome ? 'is-home-wrap' : ''}`}>
         <Routes>
-          <Route path="/" element={<HomePage />} />
+          <Route path="/" element={<HomePage addToCart={addToCart} />} />
           <Route path="/products" element={<ProductsPage addToCart={addToCart} />} />
           <Route path="/cart" element={<CartPage cart={cart} updateQuantity={updateQuantity} removeItem={removeItem} clearCart={clearCart} />} />
           <Route path="/checkout" element={<CheckoutPage cart={cart} clearCart={clearCart} />} />

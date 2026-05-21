@@ -1,7 +1,7 @@
 import { useRef, useEffect, useState } from 'react'
 import { Link } from 'react-router-dom'
 
-function HomePage() {
+function HomePage({ addToCart }) {
   const collectionsGridRef = useRef(null)
   const thumbRef = useRef(null)
   const testimonialScrollRef = useRef(null)
@@ -425,6 +425,163 @@ function HomePage() {
                 >
                   shop the bundle
                 </Link>
+              </div>
+            </div>
+          </div>
+        </div>
+      </section>
+
+      {/* Bestsellers Section */}
+      <section className="bestsellers-section">
+        <picture className="bestsellers-backdrop">
+          <img
+            src="https://methodproducts.com/cdn/shop/files/refill-carousel-vector.webp?crop=center&height=855&v=1742308145&width=1680"
+            alt=""
+            className="bestsellers-backdrop-img"
+            loading="lazy"
+          />
+        </picture>
+
+        <div className="bestsellers-container">
+          <div className="bestsellers-header">
+            <div className="bestsellers-title-box">
+              <span className="bestsellers-subtitle">shop bestsellers</span>
+              <h2 className="bestsellers-title">go ahead, grab our fan favorites</h2>
+            </div>
+          </div>
+
+          <div className="bestsellers-grid-wrap">
+            <div className="bestsellers-grid">
+              <div className="bestseller-card">
+                <div className="bestseller-img-box">
+                  <img
+                    src="https://methodproducts.com/cdn/shop/files/MTHD_GHW_Refill_34oz_SweetWater_Front_US_378682__13360.1737652984.386.513_122dd232-c8d7-43e9-907c-c6d1ea521685.jpg?v=1770160914"
+                    alt="gel hand wash refill - sweet water"
+                    className="bestseller-img"
+                  />
+                </div>
+                <div className="bestseller-content">
+                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(54)</span></div>
+                  <div className="bestseller-tag-text">best seller</div>
+                  <div className="bestseller-scent">sweet water</div>
+                  <h3 className="bestseller-product-title">gel hand wash refill</h3>
+                  <div className="bestseller-footer">
+                    <span className="bestseller-price">$7.49</span>
+                    <button
+                      type="button"
+                      className="bestseller-card-btn"
+                      onClick={() => addToCart({
+                        id: 'bestseller-1',
+                        name: 'gel hand wash refill - sweet water',
+                        price: 7.49,
+                        image_url: 'https://methodproducts.com/cdn/shop/files/MTHD_GHW_Refill_34oz_SweetWater_Front_US_378682__13360.1737652984.386.513_122dd232-c8d7-43e9-907c-c6d1ea521685.jpg?v=1770160914',
+                        fragrance: 'sweet water',
+                        category: 'hand wash'
+                      })}
+                    >
+                      add to cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bestseller-card">
+                <div className="bestseller-img-box">
+                  <img
+                    src="/brand/products/Simply Nourish Body Wash Image.webp"
+                    alt="body wash - simply nourish"
+                    className="bestseller-img"
+                  />
+                </div>
+                <div className="bestseller-content">
+                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(1363)</span></div>
+                  <div className="bestseller-tag-text">new</div>
+                  <div className="bestseller-scent">simply nourish</div>
+                  <h3 className="bestseller-product-title">body wash</h3>
+                  <div className="bestseller-footer">
+                    <span className="bestseller-price">$12.49</span>
+                    <button
+                      type="button"
+                      className="bestseller-card-btn"
+                      onClick={() => addToCart({
+                        id: 'bestseller-2',
+                        name: 'body wash - simply nourish',
+                        price: 12.49,
+                        image_url: '/brand/products/Simply Nourish Body Wash Image.webp',
+                        fragrance: 'simply nourish',
+                        category: 'body wash'
+                      })}
+                    >
+                      add to cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bestseller-card">
+                <div className="bestseller-img-box">
+                  <img
+                    src="/brand/products/Ginger Mango Laundry Detergent Image.webp"
+                    alt="laundry detergent - ginger mango"
+                    className="bestseller-img"
+                  />
+                </div>
+                <div className="bestseller-content">
+                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(43)</span></div>
+                  <div className="bestseller-tag-text">best seller</div>
+                  <div className="bestseller-scent">ginger mango</div>
+                  <h3 className="bestseller-product-title">laundry detergent</h3>
+                  <div className="bestseller-footer">
+                    <span className="bestseller-price">$14.49</span>
+                    <button
+                      type="button"
+                      className="bestseller-card-btn"
+                      onClick={() => addToCart({
+                        id: 'bestseller-3',
+                        name: 'laundry detergent - ginger mango',
+                        price: 14.49,
+                        image_url: '/brand/products/Ginger Mango Laundry Detergent Image.webp',
+                        fragrance: 'ginger mango',
+                        category: 'home cleaning'
+                      })}
+                    >
+                      add to cart
+                    </button>
+                  </div>
+                </div>
+              </div>
+
+              <div className="bestseller-card">
+                <div className="bestseller-img-box">
+                  <img
+                    src="/brand/products/Sea + Surf Body Wash Image.webp"
+                    alt="body wash - sea + surf"
+                    className="bestseller-img"
+                  />
+                </div>
+                <div className="bestseller-content">
+                  <div className="bestseller-reviews">★★★★★ <span className="review-count">(1323)</span></div>
+                  <div className="bestseller-tag-text">new</div>
+                  <div className="bestseller-scent">sea + surf</div>
+                  <h3 className="bestseller-product-title">body wash</h3>
+                  <div className="bestseller-footer">
+                    <span className="bestseller-price">$12.49</span>
+                    <button
+                      type="button"
+                      className="bestseller-card-btn"
+                      onClick={() => addToCart({
+                        id: 'bestseller-4',
+                        name: 'body wash - sea + surf',
+                        price: 12.49,
+                        image_url: '/brand/products/Sea + Surf Body Wash Image.webp',
+                        fragrance: 'sea + surf',
+                        category: 'body wash'
+                      })}
+                    >
+                      add to cart
+                    </button>
+                  </div>
+                </div>
               </div>
             </div>
           </div>
