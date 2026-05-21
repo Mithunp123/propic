@@ -93,8 +93,6 @@ function Header({ cartCount, isHome, onCartClick }) {
             <NavLink to="/" className="neatly-navlink">Home</NavLink>
             <NavLink to="/products" className="neatly-navlink">Products</NavLink>
             <NavLink to="/about" className="neatly-navlink">About</NavLink>
-            <NavLink to="/products" className="neatly-navlink">Services</NavLink>
-            <NavLink to="/track-order" className="neatly-navlink">Blogs</NavLink>
             <NavLink to="/contact" className="neatly-navlink">Contact</NavLink>
             <NavLink to="/track-order" className="neatly-navlink">Track Order</NavLink>
           </nav>

@@ -10,7 +10,8 @@ import CartPage from './pages/CartPage'
 import CheckoutPage from './pages/CheckoutPage'
 import OrderConfirmationPage from './pages/OrderConfirmationPage'
 import TrackOrderPage from './pages/TrackOrderPage'
-import StaticPage from './pages/StaticPage'
+import AboutPage from './pages/AboutPage'
+import ContactPage from './pages/ContactPage'
 import NotFoundPage from './pages/NotFoundPage'
 import AdminLayout from './components/layout/AdminLayout'
 import AdminDashboardPage from './pages/AdminDashboardPage'
@@ -95,8 +96,8 @@ function App() {
           <Route path="/checkout" element={<CheckoutPage cart={cart} clearCart={clearCart} />} />
           <Route path="/order/:orderId" element={<OrderConfirmationPage clearCart={clearCart} />} />
           <Route path="/track-order" element={<TrackOrderPage />} />
-          <Route path="/about" element={<StaticPage title="About PROPIC" description="Premium cleaning products for homes and businesses." />} />
-          <Route path="/contact" element={<StaticPage title="Contact" description="Use the checkout and tracking flows to connect with the business team." />} />
+          <Route path="/about" element={<AboutPage />} />
+          <Route path="/contact" element={<ContactPage />} />
           <Route path={ADMIN_ROUTE} element={<AdminLayout />}>
             <Route index element={<AdminDashboardPage />} />
             <Route path="products" element={<AdminProductsPage />} />
